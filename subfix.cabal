@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ccd6d3f177151afd531307d68e3bf983deed87504a0dddaf8581f451ceec4fd0
+-- hash: d007e87bb36671373e831d22ee6d19cedeec2d81a3e1543f413d672dc39ce9e5
 
 name:           subfix
 version:        0.0.0
@@ -29,7 +29,7 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      SubFix
   other-modules:
       Paths_subfix
   hs-source-dirs:
