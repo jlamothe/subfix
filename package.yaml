@@ -50,3 +50,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - subfix
+    - hspec >=2.7.4 && <2.8

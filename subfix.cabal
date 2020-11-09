@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d24158a5725d6d8de1a1ea4fd8e7d406c303228e05359fbbbe13416795424d32
+-- hash: ccd6d3f177151afd531307d68e3bf983deed87504a0dddaf8581f451ceec4fd0
 
 name:           subfix
 version:        0.0.0
@@ -61,5 +61,6 @@ test-suite subfix-test
   ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec >=2.7.4 && <2.8
     , subfix
   default-language: Haskell2010
