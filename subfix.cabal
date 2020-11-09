@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d007e87bb36671373e831d22ee6d19cedeec2d81a3e1543f413d672dc39ce9e5
+-- hash: 0bbe0a65faa072211284afd0838b32a74ded6fa51252fc0c023e92ba5da20c8f
 
 name:           subfix
 version:        0.0.0
@@ -55,6 +55,7 @@ test-suite subfix-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      SubFix.ConvertSpec
       Paths_subfix
   hs-source-dirs:
       test

@@ -20,7 +20,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import Test.Hspec (hspec)
 
+import qualified SubFix.ConvertSpec as Convert
+
 main :: IO ()
-main = hspec $ return ()
+main = hspec Convert.spec
 
 --jl

@@ -29,6 +29,8 @@ module SubFix (
   encode,
 ) where
 
+import Data.Char (chr)
+
 -- | Defines a caption group
 data Caption = Caption
   { capID :: Int
@@ -43,7 +45,7 @@ data Caption = Caption
 
 -- | Applies the transformations to a caption group
 convert :: Caption -> Caption
-convert = undefined
+convert c = c { capText = editText $ capText c }
 
 -- | Decodes the text of a subtitle file
 decode
@@ -57,5 +59,17 @@ decode = undefined
 -- | Encodes a list of caption groups
 encode :: [Caption] -> String
 encode = undefined
+
+editText :: String -> String
+editText = checkCaret . checkNotes
+
+checkCaret :: String -> String
+checkCaret ('^' : str) = "{\\an8}" ++ str
+checkCaret str = str
+
+checkNotes :: String -> String
+checkNotes "" = ""
+checkNotes ('#' : '#' : str) = chr 0x2669 : checkNotes str
+checkNotes (ch : str) = ch : checkNotes str
 
 --jl
