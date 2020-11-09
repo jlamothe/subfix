@@ -52,6 +52,9 @@ timestamp
   -> Integer
   -- ^ Milliseconds
   -> Integer
-timestamp = undefined
+timestamp h m s ms = let
+  m' = h * 60 + m
+  s' = m' * 60 + s
+  in s' * 1000 + ms
 
 --jl

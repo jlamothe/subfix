@@ -18,13 +18,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 -}
 
-module SubFix.InternalSpec (spec) where
+module SubFix.Internal.TimestampSpec (spec) where
 
-import Test.Hspec (Spec, describe)
+import Test.Hspec (Spec, describe, it, shouldBe)
 
-import qualified SubFix.Internal.TimestampSpec as Timestamp
+import SubFix.Internal (timestamp)
 
 spec :: Spec
-spec = describe "Internal" Timestamp.spec
+spec = describe "timestamp" $ let
+  expected
+    = 1 * 60 * 60 * 1000
+    + 2 * 60 * 1000
+    + 3 * 1000
+    + 4
+  in it ("should be " ++ show expected) $
+    timestamp 1 2 3 4 `shouldBe` expected
 
 --jl
