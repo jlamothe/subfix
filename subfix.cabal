@@ -1,0 +1,65 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: d24158a5725d6d8de1a1ea4fd8e7d406c303228e05359fbbbe13416795424d32
+
+name:           subfix
+version:        0.0.0
+synopsis:       Fixes .srt files
+description:    Please see the README on GitHub at <https://github.com/jlamothe/subfix#readme>
+category:       Utilities
+homepage:       https://github.com/jlamothe/subfix#readme
+bug-reports:    https://github.com/jlamothe/subfix/issues
+author:         Jonathan Lamothe
+maintainer:     jonathan@jlamothe.net
+copyright:      Jonathan Lamothe
+license:        GPL-3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/jlamothe/subfix
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_subfix
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Werror
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable subfix
+  main-is: Main.hs
+  other-modules:
+      Paths_subfix
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , subfix
+  default-language: Haskell2010
+
+test-suite subfix-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_subfix
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , subfix
+  default-language: Haskell2010

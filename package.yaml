@@ -1,0 +1,52 @@
+name:                subfix
+version:             0.0.0
+github:              "jlamothe/subfix"
+license:             GPL-3
+author:              "Jonathan Lamothe"
+maintainer:          "jonathan@jlamothe.net"
+copyright:           "Jonathan Lamothe"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+synopsis:            Fixes .srt files
+category:            Utilities
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/jlamothe/subfix#readme>
+
+ghc-options:
+- -Wall
+- -Werror
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+
+executables:
+  subfix:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - subfix
+
+tests:
+  subfix-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - subfix
