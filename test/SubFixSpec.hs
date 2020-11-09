@@ -18,11 +18,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 -}
 
-import Test.Hspec (hspec)
+module SubFixSpec (spec) where
 
-import qualified SubFixSpec as SubFix
+import Test.Hspec (Spec, describe)
 
-main :: IO ()
-main = hspec SubFix.spec
+import qualified SubFix.InternalSpec as Internal
+
+import qualified SubFix.ConvertSpec as Convert
+
+spec :: Spec
+spec = describe "SubFix" $ do
+  Internal.spec
+  Convert.spec
 
 --jl
