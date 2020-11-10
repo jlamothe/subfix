@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 2e1458e73e6f887df0b932b43aeb47cccc4d9f13cdadafa835caae628e2ae291
+-- hash: ba775360fd43dcdbf4bd590f4ac7b236109f33b1dabbda11cde0436d35d1399f
 
 name:           subfix
-version:        0.0.0
+version:        0.1.0
 synopsis:       Fixes .srt files
 description:    Please see the README on GitHub at <https://github.com/jlamothe/subfix#readme>
 category:       Utilities
