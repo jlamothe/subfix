@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ce33ad286b77569617c489030c5bec8597e68ad69f7a34c12d95ad54614a59f2
+-- hash: 0d6580c85ab3588e866980c3fede7319b7d6e699369dc88af2ec75c093c399cf
 
 name:           subfix
 version:        0.0.0
@@ -60,6 +60,7 @@ test-suite subfix-test
       SubFix.ConvertSpec
       SubFix.DecodeSpec
       SubFix.Internal.DecodeTimeSpec
+      SubFix.Internal.EncodeTimeSpec
       SubFix.Internal.TimestampSpec
       SubFix.InternalSpec
       SubFixSpec

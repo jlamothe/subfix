@@ -18,18 +18,24 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 -}
 
-module SubFix.InternalSpec (spec) where
+module SubFix.Internal.EncodeTimeSpec (spec) where
 
-import Test.Hspec (Spec, describe)
+import Test.Hspec (Spec, context, describe, it, shouldBe)
 
-import qualified SubFix.Internal.DecodeTimeSpec as DecodeTime
-import qualified SubFix.Internal.EncodeTimeSpec as EncodeTime
-import qualified SubFix.Internal.TimestampSpec as Timestamp
+import SubFix.Internal (encodeTime, timestamp)
 
 spec :: Spec
-spec = describe "Internal" $ do
-  DecodeTime.spec
-  EncodeTime.spec
-  Timestamp.spec
+spec = describe "encodeTime" $ mapM_
+  ( \(label, input, expected) ->
+    context label $
+      it ("should be: " ++ expected) $
+        encodeTime input `shouldBe` expected
+  )
+
+  --  label,           input,                  expected
+  [ ( "single digit",  timestamp 1 2 3 4,      "01:02:03,004" )
+  , ( "double digits", timestamp 10 11 12 13,  "10:11:12,013" )
+  , ( "no padding",    timestamp 10 11 12 123, "10:11:12,123" )
+  ]
 
 --jl

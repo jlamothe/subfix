@@ -52,7 +52,15 @@ decodeTime = runStateT $ do
 
 -- | Encodes a timestamp from a number of milliseconds
 encodeTime :: Integer -> String
-encodeTime = undefined
+encodeTime ms = let
+  (s, ms') = ms `divMod` 1000
+  (m, s')  = s `divMod` 60
+  (h, m')  = m `divMod` 60
+  in
+    mkNum 2 h ++ ":" ++
+    mkNum 2 m' ++ ":" ++
+    mkNum 2 s' ++ "," ++
+    mkNum 3 ms'
 
 -- | Converts hours, minutes, seconds and milliseconds into the total
 -- number of milliseconds
@@ -98,5 +106,9 @@ nextChar = get >>= \case
   (ch:str) -> do
     put str
     return ch
+
+mkNum :: Int -> Integer -> String
+mkNum digits val =
+  reverse $ take digits $ reverse (show val) ++ repeat '0'
 
 --jl
