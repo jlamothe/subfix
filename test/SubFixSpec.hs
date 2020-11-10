@@ -25,11 +25,13 @@ import Test.Hspec (Spec, describe)
 import qualified SubFix.InternalSpec as Internal
 import qualified SubFix.DecodeSpec as Decode
 import qualified SubFix.ConvertSpec as Convert
+import qualified SubFix.EncodeSpec as Encode
 
 spec :: Spec
 spec = describe "SubFix" $ do
   Internal.spec
   Decode.spec
   Convert.spec
+  Encode.spec
 
 --jl

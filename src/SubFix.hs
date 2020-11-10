@@ -35,7 +35,7 @@ import Control.Monad.Trans.Class (lift)
 import Control.Monad.Trans.State (StateT, evalStateT, get, put)
 import Data.Char (chr)
 
-import SubFix.Internal (decodeTime)
+import SubFix.Internal (decodeTime, encodeTime)
 
 -- | Defines a caption group
 data Caption = Caption
@@ -64,7 +64,9 @@ decode = evalStateT decodeLoop . lines
 
 -- | Encodes a list of caption groups
 encode :: [Caption] -> String
-encode = undefined
+encode []     = ""
+encode [c]    = encodeCaption c
+encode (c:cs) = encodeCaption c ++ "\n" ++ encode cs
 
 editText :: String -> String
 editText = checkCaret . checkNotes
@@ -131,5 +133,11 @@ nextLine = get >>= \case
     put remaining
     return line
   [] -> lift $ Left "missing line"
+
+encodeCaption :: Caption -> String
+encodeCaption c = unlines $
+  [ show $ capID c
+  , encodeTime (capStart c) ++ " --> " ++ encodeTime (capEnd c)
+  ] ++ lines (capText c)
 
 --jl
