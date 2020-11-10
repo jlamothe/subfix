@@ -20,6 +20,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 -}
 
+{-# LANGUAGE LambdaCase, RecordWildCards #-}
+
 module SubFix (
   -- * Data Types
   Caption (..),
@@ -29,7 +31,11 @@ module SubFix (
   encode,
 ) where
 
+import Control.Monad.Trans.Class (lift)
+import Control.Monad.Trans.State (StateT, evalStateT, get, put)
 import Data.Char (chr)
+
+import SubFix.Internal (decodeTime)
 
 -- | Defines a caption group
 data Caption = Caption
@@ -54,7 +60,7 @@ decode
   -> Either String [Caption]
   -- ^ The resulting caption list, or a message describing the error
   -- that occured.
-decode = undefined
+decode = evalStateT decodeLoop . lines
 
 -- | Encodes a list of caption groups
 encode :: [Caption] -> String
@@ -71,5 +77,59 @@ checkNotes :: String -> String
 checkNotes "" = ""
 checkNotes ('#' : '#' : str) = chr 0x2669 : checkNotes str
 checkNotes (ch : str) = ch : checkNotes str
+
+decodeLoop :: StateT [String] (Either String) [Caption]
+decodeLoop = get >>= \case
+  [] -> return []
+  _  -> do
+    caption  <- decodeNextCaption
+    captions <- decodeLoop
+    return $ caption : captions
+
+decodeNextCaption :: StateT [String] (Either String) Caption
+decodeNextCaption = do
+  capID              <- decodeID
+  (capStart, capEnd) <- decodeTimes
+  capText            <- decodeText
+  return $ Caption {..}
+
+decodeID :: StateT [String] (Either String) Int
+decodeID = do
+  line <- nextLine
+  case reads line of
+    [(val, "")] -> return val
+    _           -> lift $ Left "invalid caption ID"
+
+decodeTimes :: StateT [String] (Either String) (Integer, Integer)
+decodeTimes = do
+  line <- nextLine
+  case words line of
+    [startStr, "-->", endStr] -> do
+      start <- case decodeTime startStr of
+        Just (val, "") -> return val
+        _              -> lift $ Left "invalid start time"
+      end <- case decodeTime endStr of
+        Just (val, "") -> return val
+        _              -> lift $ Left "invalid end time"
+      return (start, end)
+    _ -> lift $ Left "invalid time signature"
+
+decodeText :: StateT [String] (Either String) String
+decodeText = get >>= \case
+  [] -> return ""
+  _  -> do
+    line <- nextLine
+    if line == ""
+      then return ""
+      else do
+        next <- decodeText
+        return $ line ++ "\n" ++ next
+
+nextLine :: StateT [String] (Either String) String
+nextLine = get >>= \case
+  (line : remaining) -> do
+    put remaining
+    return line
+  [] -> lift $ Left "missing line"
 
 --jl
