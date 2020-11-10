@@ -25,11 +25,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 -}
 
-module SubFix.Internal (encodeTime, decodeTime, timestamp) where
+{-# LANGUAGE LambdaCase #-}
 
--- | Encodes a timestamp from a number of milliseconds
-encodeTime :: Integer -> String
-encodeTime = undefined
+module SubFix.Internal (decodeTime, encodeTime, timestamp) where
+
+import Control.Monad (when)
+import Control.Monad.Trans.State (StateT (..), get, put)
+import Data.Char (isDigit, ord)
 
 -- | Decodes a timestamp to a number of milliseconds and the unused
 -- input
@@ -38,7 +40,19 @@ decodeTime
   -- ^ The encoded timestamp
   -> Maybe (Integer, String)
   -- ^ The number of milliseconds and unused input (if available)
-decodeTime = undefined
+decodeTime = runStateT $ do
+  hours <- getNum 2
+  dropChar ':'
+  mins <- getNum 2
+  dropChar ':'
+  secs <- getNum 2
+  dropChar ','
+  ms <- getNum 3
+  return $ timestamp hours mins secs ms
+
+-- | Encodes a timestamp from a number of milliseconds
+encodeTime :: Integer -> String
+encodeTime = undefined
 
 -- | Converts hours, minutes, seconds and milliseconds into the total
 -- number of milliseconds
@@ -56,5 +70,33 @@ timestamp h m s ms = let
   m' = h * 60 + m
   s' = m' * 60 + s
   in s' * 1000 + ms
+
+getNum :: MonadFail m => Int -> StateT String m Integer
+getNum = f 0 where
+  f val digits
+    | digits <= 0 = return val
+    | otherwise   = do
+      digit <- nextDigit
+      f (val * 10 + digit) (pred digits)
+
+dropChar :: MonadFail m => Char -> StateT String m ()
+dropChar expected = do
+  ch <- nextChar
+  when (ch /= expected) $
+    fail "incorrect character"
+
+nextDigit :: MonadFail m => StateT String m Integer
+nextDigit = do
+  ch <- nextChar
+  if isDigit ch
+    then return $ toInteger $ ord ch - ord '0'
+    else fail "missing digit"
+
+nextChar :: MonadFail m => StateT String m Char
+nextChar = get >>= \case
+  ""       -> fail "no character available"
+  (ch:str) -> do
+    put str
+    return ch
 
 --jl

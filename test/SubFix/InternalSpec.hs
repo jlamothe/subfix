@@ -22,9 +22,12 @@ module SubFix.InternalSpec (spec) where
 
 import Test.Hspec (Spec, describe)
 
+import qualified SubFix.Internal.DecodeTimeSpec as DecodeTime
 import qualified SubFix.Internal.TimestampSpec as Timestamp
 
 spec :: Spec
-spec = describe "Internal" Timestamp.spec
+spec = describe "Internal" $ do
+  DecodeTime.spec
+  Timestamp.spec
 
 --jl

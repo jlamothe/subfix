@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: abd53b387d0bc7d910539fc83efe7b2fa75fe55deb728293cb25b78a7475d4cb
+-- hash: 475ccf2c735b96ddd94fc9281d9e8e97ecf64c4b60cd6645112a6ffb72165873
 
 name:           subfix
 version:        0.0.0
@@ -38,6 +38,7 @@ library
   ghc-options: -Wall -Werror
   build-depends:
       base >=4.7 && <5
+    , transformers >=0.5.6.2 && <0.6
   default-language: Haskell2010
 
 executable subfix
@@ -57,6 +58,7 @@ test-suite subfix-test
   main-is: Spec.hs
   other-modules:
       SubFix.ConvertSpec
+      SubFix.Internal.DecodeTimeSpec
       SubFix.Internal.TimestampSpec
       SubFix.InternalSpec
       SubFixSpec
