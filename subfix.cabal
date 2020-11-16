@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ba775360fd43dcdbf4bd590f4ac7b236109f33b1dabbda11cde0436d35d1399f
+-- hash: b41ddefa80def277ca2c1c6b04f8b656de59824a18abac5d5385b1f25f2a643e
 
 name:           subfix
 version:        0.1.0
@@ -35,7 +35,7 @@ library
       Paths_subfix
   hs-source-dirs:
       src
-  ghc-options: -Wall -Werror
+  ghc-options: -Wall
   build-depends:
       base >=4.7 && <5
     , transformers >=0.5.6.2 && <0.6
@@ -47,7 +47,7 @@ executable subfix
       Paths_subfix
   hs-source-dirs:
       app
-  ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , subfix
@@ -68,7 +68,7 @@ test-suite subfix-test
       Paths_subfix
   hs-source-dirs:
       test
-  ghc-options: -Wall -Werror -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , hspec >=2.7.4 && <2.8
