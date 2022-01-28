@@ -1,10 +1,10 @@
 name:                subfix
 version:             0.1.0
-github:              "jlamothe/subfix"
 license:             GPL-3
 author:              "Jonathan Lamothe"
 maintainer:          "jonathan@jlamothe.net"
 copyright:           "Jonathan Lamothe"
+homepage:            "https://git.fingerprintsoftware.ca/jlamothe/subfix"
 
 extra-source-files:
 - README.md
